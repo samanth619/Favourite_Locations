@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useState } from "react";
 import {
   GoogleMap,
   MarkerF,
@@ -14,6 +14,7 @@ const libraries = ["places"];
 const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
   const searchBoxRef = useRef();
   const mapRef = useRef();
+  const [creatingCraft, setCreatingCraft] = useState(false);
 
   const handlePlacesChanged = () => {
     if (searchBoxRef.current) {
@@ -27,10 +28,18 @@ const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
   };
 
   const createMapBox = async () => {
-    let imageUrl = await captureMapAsImage(
-      document.getElementById("map-region")
-    );
-    addImage(imageUrl);
+    try {
+      if (!mapRef.current) return;
+      setCreatingCraft(true);
+      let imageUrl = await captureMapAsImage(
+        document.getElementById("map-region")
+      );
+      addImage(imageUrl);
+    } catch (placeholderImage) {
+      addImage(placeholderImage);
+    } finally {
+      setCreatingCraft(false);
+    }
   };
 
   return (
@@ -51,7 +60,7 @@ const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
             options={{ streetViewControl: false }}
           >
             <MarkerF position={selectedLocation} icon={love} />
-            {true && (
+            {!creatingCraft && (
               <StandaloneSearchBox
                 onLoad={(ref) => {
                   searchBoxRef.current = ref;
@@ -70,14 +79,6 @@ const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
             )}
           </GoogleMap>
         </LoadScript>
-        {false && (
-          <>
-            <div className="outer-frame f1"></div>
-            <div className="outer-frame f2"></div>
-            <div className="outer-frame f3"></div>
-            <div className="outer-frame f4"></div>
-          </>
-        )}
       </div>
       <button className="btn" type="button" onClick={createMapBox}>
         Create Craft

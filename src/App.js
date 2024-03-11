@@ -6,8 +6,8 @@ import "./App.css";
 
 function App() {
   const [selectedLocation, setSelectedLocation] = useState({
-    lat: 14.0169,
-    lng: 74.3272,
+    lat: 35.6764,
+    lng: 139.65,
   });
   const [locations, setLocations] = useState([selectedLocation]);
   const [images, setImages] = useState([]);

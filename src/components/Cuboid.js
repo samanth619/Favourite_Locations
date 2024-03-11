@@ -13,41 +13,43 @@ const Cuboid = ({ imageUrl, id }) => {
     const scene = new BABYLON.Scene(engine);
     const camera = new BABYLON.ArcRotateCamera(
       "camera",
-      Math.PI / 2,
-      Math.PI / 4,
+      0,
+      0,
       10,
       BABYLON.Vector3.Zero(),
       scene
     );
-    camera.setPosition(new BABYLON.Vector3(0, 0, -25));
+    camera.setPosition(new BABYLON.Vector3(0, 0, -26));
     camera.attachControl(canvas, true);
-    new BABYLON.HemisphericLight("light", new BABYLON.Vector3(2, 1, 0), scene);
 
-    const box = BABYLON.MeshBuilder.CreateBox(
-      "box",
-      { width: mapWidth, height: mapHeight, depth: 3 },
+    new BABYLON.HemisphericLight(
+      "light",
+      new BABYLON.Vector3(0.5, 0.5, -0.5),
       scene
     );
+
+    new BABYLON.HemisphericLight(
+      "light2",
+      new BABYLON.Vector3(-0.5, -0.5, 0.5),
+      scene
+    );
+
+    const box = BABYLON.MeshBuilder.CreateBox("box", {
+      width: mapWidth,
+      height: mapHeight,
+      depth: 3,
+      wrap: true,
+    });
 
     box.scaling.z = mapHeight;
     box.scaling.x = mapWidth;
     box.scaling.y = mapHeight;
 
-    const texture = new BABYLON.Texture(imageUrl, scene);
-    const material = new BABYLON.StandardMaterial("material", scene);
+    const texture = new BABYLON.Texture(imageUrl);
+    const material = new BABYLON.StandardMaterial("material");
     material.diffuseTexture = texture;
-
-    // Set material properties
-    material.ambientColor = new BABYLON.Color3(1, 1, 1); // Adjust as needed
-    material.specularColor = new BABYLON.Color3(0, 0, 0); // Adjust as needed
-
     material.backFaceCulling = false;
     box.material = material;
-
-    scene.createDefaultEnvironment({
-      createGround: false,
-      createSkybox: false,
-    });
 
     engine.runRenderLoop(() => {
       scene.render();
