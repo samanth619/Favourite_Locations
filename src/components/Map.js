@@ -88,6 +88,16 @@ const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
       <button className="btn" type="button" onClick={createMapBox}>
         Create Craft
       </button>
+      <div className="instructions">
+        <ul>
+          <li>Click on the map to select your favourite location (or)</li>
+          <li>Use the search box to find a location</li>
+          <li>
+            Click the "Create Craft" button above to add the map to your
+            locations list
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

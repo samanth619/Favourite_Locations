@@ -32,9 +32,9 @@ function App() {
           addImage={addImage}
         />
         <div className="crafts">
-          {images.map((image, index) => {
-            return <Cuboid key={index} imageUrl={image} id={index} />;
-          })}
+          {images.map((image, index) => (
+            <Cuboid key={index} imageUrl={image} id={index} />
+          ))}
         </div>
       </div>
     </div>
