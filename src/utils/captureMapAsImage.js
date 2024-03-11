@@ -33,7 +33,6 @@ const captureMapAsImage = async (mapContainer) => {
       );
 
       const croppedDataURL = croppedCanvas.toDataURL("image/png");
-      console.log("🚀 ~ captureMapAsImage ~ croppedDataURL:", croppedDataURL);
       resolve(croppedDataURL);
     } catch (err) {
       console.error("Error capturing map as image", err);

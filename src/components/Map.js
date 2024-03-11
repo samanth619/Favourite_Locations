@@ -19,7 +19,6 @@ const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
   const handlePlacesChanged = () => {
     if (searchBoxRef.current) {
       const places = searchBoxRef.current.getPlaces();
-      console.log("🚀 ~ handlePlacesChanged ~ places:", places);
       if (!Array.isArray(places) || places.length < 0) return;
       let lat = places[0].geometry.location.lat();
       let lng = places[0].geometry.location.lng();
@@ -42,6 +41,10 @@ const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
     }
   };
 
+  const selectPoint = (e) => {
+    handleSelectedLocation({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+  };
+
   return (
     <div className="actions">
       <div className="map" id="map-region">
@@ -56,8 +59,10 @@ const Map = ({ selectedLocation, handleSelectedLocation, addImage }) => {
             }}
             center={selectedLocation}
             zoom={13}
+            draggableCursor="default"
             onLoad={(map) => (mapRef.current = map)}
             options={{ streetViewControl: false }}
+            onClick={selectPoint}
           >
             <MarkerF position={selectedLocation} icon={love} />
             {!creatingCraft && (

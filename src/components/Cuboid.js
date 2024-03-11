@@ -37,7 +37,7 @@ const Cuboid = ({ imageUrl, id }) => {
     const box = BABYLON.MeshBuilder.CreateBox("box", {
       width: mapWidth,
       height: mapHeight,
-      depth: 3,
+      depth: mapWidth,
       wrap: true,
     });
 
