@@ -10,7 +10,7 @@ function App() {
     lng: 139.65,
   });
   const [locations, setLocations] = useState([selectedLocation]);
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState(null);
 
   const handleSelectedLocation = (location) => {
     setSelectedLocation(location);
@@ -18,7 +18,7 @@ function App() {
   };
 
   const addImage = (imageUrl) => {
-    setImages((prev) => [...prev, imageUrl]);
+    setImage(imageUrl);
   };
 
   return (
@@ -32,9 +32,7 @@ function App() {
           addImage={addImage}
         />
         <div className="crafts">
-          {images.map((image, index) => (
-            <Cuboid key={index} imageUrl={image} id={index} />
-          ))}
+          {image ? <Cuboid imageUrl={image} /> : null}
         </div>
       </div>
     </div>
